@@ -13,11 +13,11 @@ CREATE TABLE IF NOT EXISTS aluno (
 );
 
 CREATE TABLE IF NOT EXISTS matricula (
+  id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   aluno_id INTEGER NOT NULL,
   curso_id INTEGER NOT NULL,
   data_matricula DATE NOT NULL,
   nota DOUBLE PRECISION NOT NULL,
-  PRIMARY KEY (aluno_id, curso_id),
   CONSTRAINT fk_matricula_aluno
     FOREIGN KEY (aluno_id)
     REFERENCES aluno(id)
