@@ -15,8 +15,12 @@ public class AlunoREST {
     private AlunoRepository alunoRepository;
 
     @GetMapping("/alunos")
-    public ResponseEntity<List<Aluno>> obterTodosCursos() {
-        return ResponseEntity.ok(alunoRepository.findAll());
+    public ResponseEntity<List<Aluno>> obterTodosCursos(@RequestParam(value = "nome", required = false) String nome) {
+        if (nome != null && !nome.isEmpty()) {
+            return ResponseEntity.ok(alunoRepository.findByNomeContainingIgnoreCase(nome));
+        } else {
+            return ResponseEntity.ok(alunoRepository.findAll());
+        }
     }
 
     @GetMapping("/alunos/{id}")
