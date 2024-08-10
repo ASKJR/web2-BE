@@ -25,8 +25,8 @@ RUN apt-get update && \
 # Set the working directory
 WORKDIR /opt/tomcat/webapps
 
-# Copy the WAR file from the build stage
-COPY --from=build /app/target/web2_be-0.0.1-SNAPSHOT.war /opt/tomcat/webapps/
+# Copy the WAR file from the build stage and rename it to ROOT.war
+COPY --from=build /app/target/web2_be-0.0.1-SNAPSHOT.war /opt/tomcat/webapps/ROOT.war
 
 # Expose the port Tomcat runs on
 EXPOSE 8080
