@@ -4,6 +4,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+
 import br.ufpr.askjr.web2_be.model.Curso;
 import br.ufpr.askjr.web2_be.repository.CursoRepository;
 
@@ -15,8 +16,12 @@ public class CursoREST {
     private CursoRepository cursoRepository;
 
     @GetMapping("/cursos")
-    public ResponseEntity<List<Curso>> obterTodosCursos() {
-        return ResponseEntity.ok(cursoRepository.findAll());
+    public ResponseEntity<List<Curso>> obterTodosCursos(@RequestParam(value = "nome", required = false) String nome) {
+        if (nome != null && !nome.isEmpty()) {
+            return ResponseEntity.ok(cursoRepository.findByNomeContainingIgnoreCase(nome));
+        } else {
+            return ResponseEntity.ok(cursoRepository.findAll());
+        }
     }
 
     @GetMapping("/cursos/{id}")
