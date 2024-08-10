@@ -17,10 +17,10 @@ FROM openjdk:17-jdk-slim
 # Install Tomcat
 RUN apt-get update && \
     apt-get install -y wget && \
-    wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.73/bin/apache-tomcat-9.0.73.tar.gz && \
-    tar xzf apache-tomcat-9.0.73.tar.gz -C /opt/ && \
-    ln -s /opt/apache-tomcat-9.0.73 /opt/tomcat && \
-    rm apache-tomcat-9.0.73.tar.gz
+    wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.76/bin/apache-tomcat-9.0.76.tar.gz && \
+    tar xzf apache-tomcat-9.0.76.tar.gz -C /opt/ && \
+    ln -s /opt/apache-tomcat-9.0.76 /opt/tomcat && \
+    rm apache-tomcat-9.0.76.tar.gz
 
 # Set the working directory
 WORKDIR /opt/tomcat/webapps
