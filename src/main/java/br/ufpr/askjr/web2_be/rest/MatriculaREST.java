@@ -4,6 +4,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+
 import br.ufpr.askjr.web2_be.model.Matricula;
 import br.ufpr.askjr.web2_be.repository.MatriculaRepository;
 
@@ -15,8 +16,13 @@ public class MatriculaREST {
     private MatriculaRepository matriculaRepository;
 
     @GetMapping("/matriculas")
-    public ResponseEntity<List<Matricula>> obterTodosMatriculas() {
-        return ResponseEntity.ok(matriculaRepository.findAll());
+    public ResponseEntity<List<Matricula>> obterTodosMatriculas(
+            @RequestParam(value = "nome", required = false) String nome) {
+        if (nome != null && !nome.isEmpty()) {
+            return ResponseEntity.ok(matriculaRepository.findByAlunoNomeContainingIgnoreCase(nome));
+        } else {
+            return ResponseEntity.ok(matriculaRepository.findAll());
+        }
     }
 
     @GetMapping("/matriculas/{id}")
