@@ -1,0 +1,35 @@
+version: "3.4"
+
+services:
+  web2-api:
+    image: ${DOCKER_REGISTRY-}web2-api
+    container_name: web.web2-api
+    environment:
+      - VIRTUAL_HOST=web2-api.albertokato.com
+      - VIRTUAL_PORT=8080
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://web.postgres-db:5432/mydatabase
+      - SPRING_DATASOURCE_USERNAME=myuser
+      - SPRING_DATASOURCE_PASSWORD=mypassword
+      - SERVER_PORT=8080
+    expose:
+      - "8080"
+    ports:
+      - 8080:8080
+    build:
+      context: .
+      dockerfile: Dockerfile
+    external_links:
+      - web.nginx-proxy
+      - web.postgres-db
+    working_dir: /app
+    restart: always
+    tty: true
+    networks:
+      - main
+
+networks:
+  main:
+    external:
+      name: main
