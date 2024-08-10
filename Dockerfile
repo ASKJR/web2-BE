@@ -14,13 +14,13 @@ RUN mvn clean package -DskipTests
 # Stage 2: Create the final image
 FROM openjdk:17-jdk-slim
 
-# Install Tomcat
+# Install Tomcat using the valid URL
 RUN apt-get update && \
     apt-get install -y wget && \
-    wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.76/bin/apache-tomcat-9.0.76.tar.gz && \
-    tar xzf apache-tomcat-9.0.76.tar.gz -C /opt/ && \
-    ln -s /opt/apache-tomcat-9.0.76 /opt/tomcat && \
-    rm apache-tomcat-9.0.76.tar.gz
+    wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.93/bin/apache-tomcat-9.0.93.tar.gz && \
+    tar xzf apache-tomcat-9.0.93.tar.gz -C /opt/ && \
+    ln -s /opt/apache-tomcat-9.0.93 /opt/tomcat && \
+    rm apache-tomcat-9.0.93.tar.gz
 
 # Set the working directory
 WORKDIR /opt/tomcat/webapps
