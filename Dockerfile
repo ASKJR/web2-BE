@@ -14,9 +14,9 @@ RUN mvn clean package -DskipTests
 # Stage 2: Create the final image
 FROM openjdk:17-jdk-slim
 
-# Install Tomcat using the valid URL
+# Install Tomcat using the valid URL and install `unzip` for WAR extraction
 RUN apt-get update && \
-    apt-get install -y wget && \
+    apt-get install -y wget unzip && \
     wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.93/bin/apache-tomcat-9.0.93.tar.gz && \
     tar xzf apache-tomcat-9.0.93.tar.gz -C /opt/ && \
     ln -s /opt/apache-tomcat-9.0.93 /opt/tomcat && \
@@ -25,8 +25,12 @@ RUN apt-get update && \
 # Set the working directory
 WORKDIR /opt/tomcat/webapps
 
-# Copy the WAR file from the build stage and rename it to ROOT.war
-COPY --from=build /app/target/web2_be-0.0.1-SNAPSHOT.war /opt/tomcat/webapps/ROOT.war
+# Copy the WAR file from the build stage
+COPY --from=build /app/target/web2_be-0.0.1-SNAPSHOT.war /tmp/web2_be-0.0.1-SNAPSHOT.war
+
+# Extract the WAR file into the ROOT folder
+RUN unzip /tmp/web2_be-0.0.1-SNAPSHOT.war -d /opt/tomcat/webapps/ROOT && \
+    rm /tmp/web2_be-0.0.1-SNAPSHOT.war
 
 # Expose the port Tomcat runs on
 EXPOSE 8080
