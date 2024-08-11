@@ -1,0 +1,22 @@
+services:
+  web2-api-dev:
+    container_name: web.web2-api-dev
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/web2
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SERVER_PORT=8080
+    expose:
+      - "8080"
+    ports:
+      - 8080:8080
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    working_dir: /app
+    restart: always
+    tty: true
+networks:
+  default:
+    external:
+      name: main
