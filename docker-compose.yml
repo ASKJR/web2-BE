@@ -2,7 +2,6 @@ version: "3.4"
 
 services:
   web2-api:
-    image: ${DOCKER_REGISTRY-}web2-api
     container_name: web.web2-api
     environment:
       - VIRTUAL_HOST=web2-api.albertokato.com
