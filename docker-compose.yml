@@ -6,9 +6,8 @@ services:
     environment:
       - VIRTUAL_HOST=web2-api.albertokato.com
       - VIRTUAL_PORT=8080
-      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://web.postgres-db:5432/mydatabase
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://web.postgres-db:5432/web2
       - SPRING_DATASOURCE_USERNAME=myuser
       - SPRING_DATASOURCE_PASSWORD=mypassword
       - SERVER_PORT=8080
@@ -19,14 +18,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    external_links:
-      - web.nginx-proxy
-      - web.postgres-db
     working_dir: /app
     restart: always
     tty: true
-    networks:
-      - main
 
 networks:
   main:
