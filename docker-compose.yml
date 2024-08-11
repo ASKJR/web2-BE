@@ -21,6 +21,8 @@ services:
     working_dir: /app
     restart: always
     tty: true
+    networks:
+      - main
 
 networks:
   main:
