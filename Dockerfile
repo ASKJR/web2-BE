@@ -22,18 +22,11 @@ RUN apt-get update && \
     ln -s /opt/apache-tomcat-9.0.93 /opt/tomcat && \
     rm apache-tomcat-9.0.93.tar.gz
 
-# Set the working directory
-WORKDIR /opt/tomcat/webapps
+# Remove the default ROOT webapp if it exists
+RUN rm -rf /opt/tomcat/webapps/ROOT
 
 # Copy the WAR file from the build stage
-COPY --from=build /app/target/web2_be-0.0.1-SNAPSHOT.war /tmp/web2_be-0.0.1-SNAPSHOT.war
-
-# Extract the WAR file into the ROOT folder
-RUN unzip /tmp/web2_be-0.0.1-SNAPSHOT.war -d /opt/tomcat/webapps/ROOT && \
-    rm /tmp/web2_be-0.0.1-SNAPSHOT.war
+COPY --from=build /app/target/web2_be-0.0.1-SNAPSHOT.war /opt/tomcat/webapps/ROOT.war
 
 # Expose the port Tomcat runs on
 EXPOSE 8080
-
-# Start Tomcat
-CMD ["/opt/tomcat/bin/catalina.sh", "run"]
