@@ -30,3 +30,6 @@ COPY --from=build /app/target/web2_be-0.0.1-SNAPSHOT.war /opt/tomcat/webapps/ROO
 
 # Expose the port Tomcat runs on
 EXPOSE 8080
+
+# Start Tomcat
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]
